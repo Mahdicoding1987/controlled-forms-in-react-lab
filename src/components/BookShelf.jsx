@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const Bookshelf = (props) => {
-  const [books, setBooks] = useState("add a book");
+  const [books, setBooks] = useState([]);
 
   const [newBook, setNewBook] = useState({ title: "", author: "" });
 
@@ -11,7 +11,7 @@ const Bookshelf = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setBooks(`${newBook.title} By: ${newBook.author}`);
+    setBooks([...books, newBook]);
     setNewBook({ title: "", author: "" });
   };
 
@@ -26,7 +26,16 @@ const Bookshelf = (props) => {
           <input id="author" name="author" value={newBook.author} onChange={addBook} />
           <button type="submit">Submit your book</button>
         </form>
-        <p>{books}</p>
+
+        <ul>
+          {books.map((book) => {
+            return (
+              <li key={book.title}>
+                {book.title} by {book.author}
+              </li>
+            );
+          })}
+        </ul>
       </div>
       <div className="bookCardsDiv">{/* Book cards will display here */}</div>
     </div>
